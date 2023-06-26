@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.simplegame.SaleController">
+    <children>
+        <ImageView fitHeight="129.0" fitWidth="245.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../Logo.png" />
+            </image>
+        </ImageView>
+        <Button fx:id="button_back" layoutX="37.0" layoutY="140.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="158.0" style="-fx-background-color: transparent; -fx-background-color: #9cd6be;" text="Back">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="18.0" />
+            </font>
+        </Button>
+        <Label layoutX="294.0" layoutY="54.0" text="Place an order">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="27.0" />
+            </font>
+        </Label>
+      <Label layoutX="441.0" layoutY="107.0" prefHeight="30.0" prefWidth="48.0" style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-padding: 10px;" text="qty">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="10.0" />
+         </font>
+      </Label>
+         <Label layoutX="465.0" layoutY="75.0" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-padding: 10px;" text="Order List">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="12.0" />
+         </font></Label>
+        <TextField fx:id="searchField" layoutX="206.0" layoutY="95.0" prefWidth="240.0" promptText="Search by product name" />
+        <VBox layoutX="206.0" layoutY="120.0" prefHeight="250.0" prefWidth="240.0" style="-fx-background-color: #FFFFFF;">
+            <!-- Add a scroll pane to enable scrolling -->
+            <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+                <content>
+                    <VBox fx:id="productList" spacing="10.0" />
+                </content>
+            </ScrollPane>
+        </VBox>
+        <VBox layoutX="452.0" layoutY="136.0" prefHeight="235.0" prefWidth="140.0" style="-fx-background-color: #FFFFFF;">
+            <ScrollPane fitToWidth="true">
+                <content>
+                    <VBox fx:id="cartList" spacing="10.0" />
+                </content>
+            </ScrollPane>
+            <Label fx:id="totalLabel" layoutX="10.0" layoutY="108.0" style="-fx-font-size: 15px; -fx-font-weight: bold;" text="Total: $0" />
+            <Button fx:id="button_collectpayment" layoutX="452.0" layoutY="283.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="140.0" style="-fx-background-color: transparent; -fx-background-color: #9cd6be;" text="Collect Payment">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="15.0" />
+                </font>
+            </Button>
+        </VBox>
+      <Label layoutX="487.0" layoutY="107.0" prefHeight="30.0" prefWidth="48.0" style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-padding: 10px;" text="Item">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="10.0" />
+         </font>
+      </Label>
+    </children>
+</AnchorPane>

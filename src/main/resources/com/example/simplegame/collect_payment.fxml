@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.simplegame.CollectPayment">
+    <children>
+        <ImageView fitHeight="129.0" fitWidth="245.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../Logo.png" />
+            </image>
+        </ImageView>
+        <Button fx:id="button_back" layoutX="37.0" layoutY="140.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="158.0" style="-fx-background-color: transparent; -fx-background-color: #9cd6be;" text="Back">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="18.0" />
+            </font>
+        </Button>
+        <Label fx:id="label_total_amount" layoutX="286.0" layoutY="80.0" text="Total Amount: $100">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="27.0" />
+            </font>
+        </Label>
+        <Label layoutX="206.0" layoutY="128.0" text="Customer Email:">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="20.0" />
+            </font>
+        </Label>
+        <Label layoutX="206.0" layoutY="162.0" text="Card Number:">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="20.0" />
+            </font>
+        </Label>
+        <Label layoutX="208.0" layoutY="199.0" text="Expiry Rate:">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="20.0" />
+            </font>
+        </Label>
+        <Label layoutX="209.0" layoutY="234.0" text="CVV:">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="20.0" />
+            </font>
+        </Label>
+      <TextField fx:id="tr_email" layoutX="373.0" layoutY="125.0" prefHeight="26.0" prefWidth="205.0" />
+      <TextField fx:id="tr_card_number" layoutX="349.0" layoutY="160.0" prefHeight="26.0" prefWidth="229.0" />
+      <TextField fx:id="tr_exp_date_month" layoutX="336.0" layoutY="198.0" prefHeight="26.0" prefWidth="37.0" />
+      <TextField fx:id="tr_exp_date_year" layoutX="391.0" layoutY="198.0" prefHeight="26.0" prefWidth="37.0" />
+      <Line endX="13.0" endY="-34.59999084472656" layoutX="373.0" layoutY="236.0" startX="6.5999755859375" startY="-16.199996948242188" />
+      <TextField fx:id="tr_cvv" layoutX="267.0" layoutY="232.0" prefHeight="26.0" prefWidth="49.0" />
+      <Button fx:id="button_submit" layoutX="299.0" layoutY="277.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="158.0" style="-fx-background-color: transparent; -fx-background-color: #9cd6be;" text="Submit">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+      </Button>
+    </children>
+</AnchorPane>
