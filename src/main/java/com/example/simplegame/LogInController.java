@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
@@ -13,7 +14,7 @@ import java.util.ResourceBundle;
 public class LogInController implements Initializable {
 
     @FXML
-    private TextField passWord;
+    private PasswordField passWord;
 
     @FXML
     private TextField userName;

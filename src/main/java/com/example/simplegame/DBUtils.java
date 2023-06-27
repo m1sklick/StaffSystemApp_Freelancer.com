@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.*;
 import java.lang.*;
+import java.util.Map;
 
 public class DBUtils {
     private String username = null;
@@ -250,7 +251,7 @@ public class DBUtils {
         }
     }
 
-    public static void collectPayment(ActionEvent event, String fxmlFile, String title, String username, double total_amount) {
+    public static void collectPayment(ActionEvent event, String fxmlFile, String title, String username, double total_amount, Map<Integer, Integer> id_qty) {
         Parent root;
         System.out.println("Trying to change the scene..");
         if(username != null) {
@@ -260,7 +261,7 @@ public class DBUtils {
                 CollectPayment collectPayment = loader.getController();
 
 
-                collectPayment.setDetails(username, total_amount);
+                collectPayment.setDetails(username, total_amount, id_qty);
 
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setTitle(title);

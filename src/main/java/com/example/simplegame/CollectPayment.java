@@ -11,6 +11,8 @@ import javafx.scene.control.TextField;
 
 import java.net.URL;
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -18,6 +20,7 @@ public class CollectPayment implements Initializable {
 
     private String username;
     private double total_amount;
+    private Map<Integer, Integer> id_qty = new HashMap<>();
 
     @FXML
     private Button button_back;
@@ -64,10 +67,11 @@ public class CollectPayment implements Initializable {
 
     }
 
-    public void setDetails(String username, double total_amount) {
+    public void setDetails(String username, double total_amount, Map<Integer, Integer> id_qty) {
         this.username = username;
         this.total_amount = total_amount;
-
+        this.id_qty = id_qty;
+        System.out.println(id_qty.toString());
         label_total_amount.setText("Total Amount: $" + total_amount);
 
     }
@@ -122,13 +126,28 @@ public class CollectPayment implements Initializable {
 
             // Prepare the SQL statement to insert a new row into the "sales" table
             String sql = "INSERT INTO sales (staff_number, amount_sold) VALUES (?, ?)";
+            String updateSql = "UPDATE stock SET quantity = quantity - ? WHERE id = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
+            PreparedStatement updateStatement = connection.prepareStatement(updateSql);
 
             // Retrieve the staff_number based on the username from the "staff" table
             String staffNumberSql = "SELECT staff_number FROM staff WHERE username = ?";
             PreparedStatement staffNumberStatement = connection.prepareStatement(staffNumberSql);
             staffNumberStatement.setString(1, username);
             int staffNumber = -1;  // Initialize with a default value
+
+            for (Map.Entry<Integer, Integer> entry : id_qty.entrySet()) {
+                int productId = entry.getKey();
+                int quantity = entry.getValue();
+
+                // Set the values for the update statement
+                updateStatement.setInt(1, quantity);
+                updateStatement.setInt(2, productId);
+
+                // Execute the update statement
+                updateStatement.executeUpdate();
+            }
+
 
             // Execute the query to retrieve the staff_number
             if (staffNumberStatement.execute()) {
@@ -146,6 +165,7 @@ public class CollectPayment implements Initializable {
             statement.executeUpdate();
 
             // Close the prepared statement and database connection
+            updateStatement.close();
             statement.close();
             connection.close();
 

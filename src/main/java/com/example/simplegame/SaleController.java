@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -23,6 +22,7 @@ import java.util.ResourceBundle;
 public class SaleController implements Initializable {
     private String username;
     private double total_amount;
+    private Map<Integer, Integer> id_qty = new HashMap<>();
 
     @FXML
     private Button button_back;
@@ -54,7 +54,7 @@ public class SaleController implements Initializable {
         });
         button_collectpayment.setOnAction(event -> {
             System.out.println("Trying to go to the payment page..");
-            DBUtils.collectPayment(event, "collect_payment.fxml", "Staff Sale System", username, total_amount);
+            if(total_amount != 0) DBUtils.collectPayment(event, "collect_payment.fxml", "Staff Sale System", username, total_amount, id_qty);
         });
 
         cartItems = new HashMap<>();
@@ -134,6 +134,8 @@ public class SaleController implements Initializable {
             int productId = entry.getKey();
             int quantity = entry.getValue();
             double price = getProductPrice(productId);
+
+            id_qty.put(productId, quantity);
 
             totalAmount += price * quantity;
 
