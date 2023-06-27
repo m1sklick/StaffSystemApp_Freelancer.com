@@ -45,6 +45,7 @@ public class SaleController implements Initializable {
     private Map<Integer, Integer> cartItems;
     private Map<Integer, String> productNames;
     private Map<Integer, Double> productPrices;
+    private Map<Integer, String> productImageUrls; // Added map for storing image URLs
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -54,12 +55,14 @@ public class SaleController implements Initializable {
         });
         button_collectpayment.setOnAction(event -> {
             System.out.println("Trying to go to the payment page..");
-            if(total_amount != 0) DBUtils.collectPayment(event, "collect_payment.fxml", "Staff Sale System", username, total_amount, id_qty);
+            if (total_amount != 0)
+                DBUtils.collectPayment(event, "collect_payment.fxml", "Staff Sale System", username, total_amount, id_qty);
         });
 
         cartItems = new HashMap<>();
         productNames = new HashMap<>();
         productPrices = new HashMap<>();
+        productImageUrls = new HashMap<>(); // Initialize the map for image URLs
 
         loadProducts();
         addSearchListener();
@@ -82,10 +85,10 @@ public class SaleController implements Initializable {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 double price = resultSet.getDouble("price");
-                String imageName = resultSet.getString("image_name");
+                String imageUrl = resultSet.getString("image_name");
 
                 // Create an ImageView for the product image/icon
-                ImageView imageView = new ImageView(new Image(imageName));
+                ImageView imageView = new ImageView(new Image(imageUrl));
                 imageView.setFitHeight(50);
                 imageView.setPreserveRatio(true);
 
@@ -101,9 +104,10 @@ public class SaleController implements Initializable {
                 // Add the Label to the product list
                 productList.getChildren().add(label);
 
-                // Store the product name and price for later retrieval
+                // Store the product name, price, and image URL for later retrieval
                 productNames.put(id, name);
                 productPrices.put(id, price);
+                productImageUrls.put(id, imageUrl);
             }
 
             // Close the database connection
@@ -174,23 +178,16 @@ public class SaleController implements Initializable {
             // Clear the product list
             productList.getChildren().clear();
 
-            try {
-                // Connect to the MySQL database
-                Connection connection = DriverManager.getConnection(new DataBaseInfo().getDataBaseConnectionURL());
-                Statement statement = connection.createStatement();
+            for (Map.Entry<Integer, String> entry : productNames.entrySet()) {
+                int productId = entry.getKey();
+                String name = entry.getValue().toLowerCase();
 
-                // Retrieve the products from the stock table based on the search term
-                String query = "SELECT * FROM stock WHERE LOWER(name) LIKE '%" + searchTerm + "%'";
-                ResultSet resultSet = statement.executeQuery(query);
-
-                while (resultSet.next()) {
-                    int id = resultSet.getInt("id");
-                    String name = resultSet.getString("name");
-                    double price = resultSet.getDouble("price");
-                    String imageName = resultSet.getString("image_name");
+                if (name.contains(searchTerm)) {
+                    double price = getProductPrice(productId);
+                    String imageUrl = productImageUrls.get(productId); // Retrieve the image URL from the stored map
 
                     // Create an ImageView for the product image/icon
-                    ImageView imageView = new ImageView(new Image(imageName));
+                    ImageView imageView = new ImageView(new Image(imageUrl));
                     imageView.setFitHeight(50);
                     imageView.setPreserveRatio(true);
 
@@ -200,23 +197,12 @@ public class SaleController implements Initializable {
 
                     // Add the event handler to the Label
                     label.setOnMouseClicked(event -> {
-                        addToCart(id, name);
+                        addToCart(productId, name);
                     });
 
                     // Add the Label to the product list
                     productList.getChildren().add(label);
-
-                    // Store the product name and price for later retrieval
-                    productNames.put(id, name);
-                    productPrices.put(id, price);
                 }
-
-                // Close the database connection
-                resultSet.close();
-                statement.close();
-                connection.close();
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         });
     }
@@ -234,5 +220,4 @@ public class SaleController implements Initializable {
             updateCartView();
         }
     }
-
 }
