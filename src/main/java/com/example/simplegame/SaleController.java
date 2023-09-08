@@ -2,6 +2,7 @@ package com.example.simplegame;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -45,7 +46,7 @@ public class SaleController implements Initializable {
     private Map<Integer, Integer> cartItems;
     private Map<Integer, String> productNames;
     private Map<Integer, Double> productPrices;
-    private Map<Integer, String> productImageUrls; // Added map for storing image URLs
+    private Map<Integer, String> productImages; // Added map for storing image URLs
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -62,7 +63,7 @@ public class SaleController implements Initializable {
         cartItems = new HashMap<>();
         productNames = new HashMap<>();
         productPrices = new HashMap<>();
-        productImageUrls = new HashMap<>(); // Initialize the map for image URLs
+        productImages = new HashMap<>(); // Initialize the map for image URLs
 
         loadProducts();
         addSearchListener();
@@ -85,10 +86,10 @@ public class SaleController implements Initializable {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 double price = resultSet.getDouble("price");
-                String imageUrl = resultSet.getString("image_name");
+                String image = resultSet.getString("image_name");
 
                 // Create an ImageView for the product image/icon
-                ImageView imageView = new ImageView(new Image(imageUrl));
+                ImageView imageView = new ImageView(new DataBaseInfo().getImageURL() + image);
                 imageView.setFitHeight(50);
                 imageView.setPreserveRatio(true);
 
@@ -107,7 +108,7 @@ public class SaleController implements Initializable {
                 // Store the product name, price, and image URL for later retrieval
                 productNames.put(id, name);
                 productPrices.put(id, price);
-                productImageUrls.put(id, imageUrl);
+                productImages.put(id, image);
             }
 
             // Close the database connection
@@ -184,10 +185,10 @@ public class SaleController implements Initializable {
 
                 if (name.contains(searchTerm)) {
                     double price = getProductPrice(productId);
-                    String imageUrl = productImageUrls.get(productId); // Retrieve the image URL from the stored map
+                    String image = productImages.get(productId); // Retrieve the image name
 
                     // Create an ImageView for the product image/icon
-                    ImageView imageView = new ImageView(new Image(imageUrl));
+                    ImageView imageView = new ImageView(new DataBaseInfo().getImageURL() + image);
                     imageView.setFitHeight(50);
                     imageView.setPreserveRatio(true);
 

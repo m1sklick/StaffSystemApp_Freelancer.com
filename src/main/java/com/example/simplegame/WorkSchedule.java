@@ -119,10 +119,12 @@ public class WorkSchedule implements Initializable {
             // Iterate over the result set and update the calendar buttons
             while (resultSet.next()) {
                 LocalDate date = resultSet.getDate("shift_date").toLocalDate();
-                Button dayButton = (Button) gridPane_calendar.getChildren().get(date.getDayOfMonth() - 1 + 7);
-                // Update the background color
-                dayButton.setText(dayButton.getText() + resultSet.getInt("shift_hours") + " Hrs");
-                dayButton.setStyle("-fx-background-color: green;");
+                if(currentDate.getMonth() == date.getMonth()){
+                    Button dayButton = (Button) gridPane_calendar.getChildren().get(date.getDayOfMonth() - 1 + 7);
+                    // Update the background color
+                    dayButton.setText(dayButton.getText() + resultSet.getInt("shift_hours") + " Hrs");
+                    dayButton.setStyle("-fx-background-color: green;");
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
